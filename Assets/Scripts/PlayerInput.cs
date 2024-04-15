@@ -7,6 +7,7 @@ public class PlayerInput : MonoBehaviour
 {
     public Vector2 move;
     public Vector2 look;
+    public bool isStopping;
     public bool isFiring;
     public bool isLeftFiring;
 
@@ -18,6 +19,11 @@ public class PlayerInput : MonoBehaviour
     public void OnLook(InputValue value)
     {
         LookInput(value.Get<Vector2>());
+    }
+
+    public void OnStop(InputValue value)
+    {
+        StopInput(value.isPressed);
     }
 
     public void OnFire(InputValue value)
@@ -38,6 +44,11 @@ public class PlayerInput : MonoBehaviour
     public void LookInput(Vector2 newLook)
     {
         look = newLook;
+    }
+
+    public void StopInput(bool newState)
+    {
+        isStopping = newState;
     }
 
     public void FireInput(bool newState)

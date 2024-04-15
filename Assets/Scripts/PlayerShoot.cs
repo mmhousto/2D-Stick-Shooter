@@ -10,6 +10,8 @@ public class PlayerShoot : MonoBehaviour
     public GameObject leftFacingDirection;
     public GameObject bulletRightSpawn;
     public GameObject bulletLeftSpawn;
+    public SpriteRenderer leftWeapon;
+    public SpriteRenderer rightWeapon;
 
     private float shotStrength = 25f;
     private float fireTime = 0.35f;
@@ -34,8 +36,30 @@ public class PlayerShoot : MonoBehaviour
         rightFacingDirection.transform.rotation = Quaternion.Euler(new Vector3(0, 0, GetAngleFromVector(_playerInput.look)));
         leftFacingDirection.transform.rotation = Quaternion.Euler(new Vector3(0, 0, GetAngleFromVector(_playerInput.move)));
 
+        CheckWeaponDirection();
+
         CheckIfLeftFiring();
         CheckIfFiring();
+    }
+
+    void CheckWeaponDirection()
+    {
+        if (leftFacingDirection.transform.localRotation.z >= .75f && leftWeapon.flipY == false)
+        {
+            leftWeapon.flipY = true;
+        }
+        else if (leftFacingDirection.transform.localRotation.z < .75 && leftWeapon.flipY == true)
+        {
+            leftWeapon.flipY = false;
+        }
+
+        if(rightFacingDirection.transform.localRotation.z >= .75 && rightWeapon.flipY == false)
+        {
+            rightWeapon.flipY = true;
+        }else if (rightFacingDirection.transform.localRotation.z < .75 && rightWeapon.flipY == true)
+        {
+            rightWeapon.flipY = false;
+        }
     }
 
     void CheckIfLeftFiring()
