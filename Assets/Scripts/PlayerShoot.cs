@@ -13,6 +13,11 @@ public class PlayerShoot : MonoBehaviour
     public SpriteRenderer leftWeapon;
     public SpriteRenderer rightWeapon;
 
+    private Animator rightWeaponAnim;
+    private Animator leftWeaponAnim;
+
+    private Vector3 posSpawnLocation = new Vector3(0.48f, 0.16f, 0);
+    private Vector3 negSpawnLocation = new Vector3(0.48f, -0.16f, 0);
     private float shotStrength = 25f;
     private float fireTime = 0.35f;
     private float leftTime;
@@ -24,6 +29,8 @@ public class PlayerShoot : MonoBehaviour
     void Start()
     {
         _playerInput = GetComponent<PlayerInput>();
+        rightWeaponAnim = rightWeapon.GetComponent<Animator>();
+        leftWeaponAnim = leftWeapon.GetComponent<Animator>();
         canFire = true;
         canLeftFire = true;
         leftTime = 0;
@@ -47,18 +54,23 @@ public class PlayerShoot : MonoBehaviour
         if (leftFacingDirection.transform.localRotation.z >= .75f && leftWeapon.flipY == false)
         {
             leftWeapon.flipY = true;
+            bulletLeftSpawn.transform.localPosition = negSpawnLocation;
         }
         else if (leftFacingDirection.transform.localRotation.z < .75 && leftWeapon.flipY == true)
         {
             leftWeapon.flipY = false;
+            bulletLeftSpawn.transform.localPosition = posSpawnLocation;
         }
 
         if(rightFacingDirection.transform.localRotation.z >= .75 && rightWeapon.flipY == false)
         {
             rightWeapon.flipY = true;
-        }else if (rightFacingDirection.transform.localRotation.z < .75 && rightWeapon.flipY == true)
+            bulletRightSpawn.transform.localPosition = negSpawnLocation;
+        }
+        else if (rightFacingDirection.transform.localRotation.z < .75 && rightWeapon.flipY == true)
         {
             rightWeapon.flipY = false;
+            bulletRightSpawn.transform.localPosition = posSpawnLocation;
         }
     }
 
@@ -76,7 +88,8 @@ public class PlayerShoot : MonoBehaviour
 
         if (_playerInput.isLeftFiring == true && canLeftFire == true)
         {
-            FireLeftProjectile();
+            leftWeaponAnim.SetTrigger("Fire");
+            Invoke(nameof(FireLeftProjectile), 0.1f);
             canLeftFire = false;
             leftTime = fireTime;
         }
@@ -97,7 +110,8 @@ public class PlayerShoot : MonoBehaviour
 
         if (_playerInput.isFiring == true && canFire == true)
         {
-            FireProjectile();
+            rightWeaponAnim.SetTrigger("Fire");
+            Invoke(nameof(FireProjectile), 0.1f);
             canFire = false;
             rightTime = fireTime;
         }
