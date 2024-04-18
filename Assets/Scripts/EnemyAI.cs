@@ -19,11 +19,18 @@ public class EnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+
+        if(GameObject.FindWithTag("Player") != null)
+            player = GameObject.FindWithTag("Player").transform;
     }
 
     private void Update()
     {
-        agent.SetDestination(player.position);
+        if (player == null && GameObject.FindWithTag("Player"))
+            player = GameObject.FindWithTag("Player").transform;
+
+        if (player != null)
+            agent.SetDestination(player.position);
     }
     /*private void FixedUpdate()
     {
