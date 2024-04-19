@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+
+    public Rigidbody2D rb;
+    private BulletPool pool;
+
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, 2.5f);
+        pool = BulletPool.instance;
+        rb = GetComponent<Rigidbody2D>();
+        //Destroy(gameObject, 2.5f);
+        Invoke(nameof(DisableObject), 2.5f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -17,7 +24,14 @@ public class Bullet : MonoBehaviour
             collision.gameObject.GetComponent<Health>().TakeDamage(25);
             
         }
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        DisableObject();
+    }
+
+    private void DisableObject()
+    {
+        pool.bulletPool.Release(this);
+        //gameObject.SetActive(false);
     }
 
 

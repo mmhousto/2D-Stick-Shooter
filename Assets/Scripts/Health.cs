@@ -31,7 +31,6 @@ public class Health : MonoBehaviour
         {
             isColliding = true;
             StartCoroutine(DealDamage());
-            Debug.Log("Coroutine started");
         }
     }
 
@@ -58,7 +57,6 @@ public class Health : MonoBehaviour
             TakeDamage(5);
             yield return new WaitForSeconds(0.5f);
         }
-        Debug.Log("Coroutine ended");
     }
 
 }

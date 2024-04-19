@@ -13,6 +13,7 @@ public class PlayerShoot : MonoBehaviour
     public SpriteRenderer leftWeapon;
     public SpriteRenderer rightWeapon;
 
+    private BulletPool bulletPool;
     private Animator rightWeaponAnim;
     private Animator leftWeaponAnim;
 
@@ -28,6 +29,7 @@ public class PlayerShoot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        bulletPool = BulletPool.instance;
         _playerInput = GetComponent<PlayerInput>();
         rightWeaponAnim = rightWeapon.GetComponent<Animator>();
         leftWeaponAnim = leftWeapon.GetComponent<Animator>();
@@ -119,13 +121,19 @@ public class PlayerShoot : MonoBehaviour
 
     void FireProjectile()
     {
-        GameObject clone = Instantiate(bulletPrefab, bulletRightSpawn.transform.position, rightFacingDirection.transform.rotation);
+        var clone = bulletPool.bulletPool.Get();
+        clone.transform.position = bulletRightSpawn.transform.position;
+        clone.transform.rotation = bulletRightSpawn.transform.rotation;
+        //GameObject clone = Instantiate(bulletPrefab, bulletRightSpawn.transform.position, rightFacingDirection.transform.rotation);
         clone.GetComponent<Rigidbody2D>().AddForce(clone.transform.right * shotStrength, ForceMode2D.Impulse);
     }
 
     void FireLeftProjectile()
     {
-        GameObject clone = Instantiate(bulletPrefab, bulletLeftSpawn.transform.position, leftFacingDirection.transform.rotation);
+        var clone = bulletPool.bulletPool.Get();
+        clone.transform.position = bulletLeftSpawn.transform.position;
+        clone.transform.rotation = bulletLeftSpawn.transform.rotation;
+        //GameObject clone = Instantiate(bulletPrefab, bulletLeftSpawn.transform.position, leftFacingDirection.transform.rotation);
         clone.GetComponent<Rigidbody2D>().AddForce(clone.transform.right * shotStrength, ForceMode2D.Impulse);
     }
 
