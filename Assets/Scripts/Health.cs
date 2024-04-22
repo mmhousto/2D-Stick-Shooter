@@ -11,7 +11,7 @@ public class Health : MonoBehaviour
     private int maxHealth = 100;
     private bool isColliding;
 
-    private void Start()
+    private void OnEnable()
     {
         CurrentHealth = maxHealth;
         healthBar.value = CurrentHealth;
@@ -22,7 +22,8 @@ public class Health : MonoBehaviour
         CurrentHealth -= damageToTake;
         healthBar.value = CurrentHealth;
 
-        if (CurrentHealth <= 0) Destroy(gameObject);
+        if (CurrentHealth <= 0 && CompareTag("Player")) Destroy(gameObject);
+        else if (CurrentHealth <= 0 && CompareTag("Enemy")) EnemyPool.instance.enemyPool.Release(GetComponent<EnemyAI>());
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

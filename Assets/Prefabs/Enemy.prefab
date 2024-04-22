@@ -280,6 +280,7 @@ GameObject:
   - component: {fileID: 5369390592186810154}
   - component: {fileID: 4089625381139217126}
   - component: {fileID: 7032449501477291578}
+  - component: {fileID: 3752544176970722551}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -413,6 +414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  agent: {fileID: 4089625381139217126}
 --- !u!195 &4089625381139217126
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -448,6 +450,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 5849972960564948114}
+--- !u!58 &3752544176970722551
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7339821866432265436}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 10
 --- !u!1 &7610232635439237572
 GameObject:
   m_ObjectHideFlags: 0

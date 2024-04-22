@@ -6,22 +6,34 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     public Transform player;
-    private NavMeshAgent agent;
-    /*public LayerMask obstacleMask;
-    public float moveSpeed = 5f;
-    public float obstacleAvoidanceForce = 10f;
-
-    private Rigidbody2D rb;*/
+    public NavMeshAgent agent;
+    private bool canFollow;
 
     private void Start()
     {
-        //rb = GetComponent<Rigidbody2D>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
 
         if(GameObject.FindWithTag("Player") != null)
             player = GameObject.FindWithTag("Player").transform;
+        canFollow = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            canFollow = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            canFollow = false;
+        }
     }
 
     private void Update()
@@ -29,27 +41,8 @@ public class EnemyAI : MonoBehaviour
         if (player == null && GameObject.FindWithTag("Player"))
             player = GameObject.FindWithTag("Player").transform;
 
-        if (player != null)
+        if (player != null && canFollow == true)
             agent.SetDestination(player.position);
     }
-    /*private void FixedUpdate()
-    {
-        if (player == null)
-            return;
-
-        Vector2 direction = (player.position - transform.position).normalized;
-        Vector2 movement = direction * moveSpeed;
-
-        // Apply movement force
-        rb.velocity = movement;
-
-        // Check for obstacles
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1, obstacleMask);
-        if (hit.collider != null)
-        {
-            // If there's an obstacle, apply avoidance force
-            Vector2 obstacleAvoidanceDirection = Vector2.Perpendicular(direction);
-            rb.AddForce(obstacleAvoidanceDirection * obstacleAvoidanceForce);
-        }
-    }*/
+ 
 }
