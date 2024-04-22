@@ -11,11 +11,21 @@ public class BulletPool : MonoBehaviour
     public ObjectPool<Bullet> bulletPool;
     private int spawnAmount = 20;
 
+    private void Awake()
+    {
+        if(instance != null && instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        instance = this;
         bulletPool = new ObjectPool<Bullet> (CreateBullet, OnGet, OnRelease, OnEnd, false, spawnAmount, 40);
     }
 
@@ -39,11 +49,5 @@ public class BulletPool : MonoBehaviour
     private void OnEnd(Bullet bullet)
     {
         Destroy(bullet);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
