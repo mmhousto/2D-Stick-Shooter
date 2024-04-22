@@ -7,6 +7,8 @@ public class EnemyAI : MonoBehaviour
 {
     public Transform player;
     public NavMeshAgent agent;
+    public int indexSpawnedAt = -1;
+    private EnemySpawner spawner;
     private bool canFollow;
 
     private void Start()
@@ -18,6 +20,11 @@ public class EnemyAI : MonoBehaviour
         if(GameObject.FindWithTag("Player") != null)
             player = GameObject.FindWithTag("Player").transform;
         canFollow = false;
+    }
+
+    private void OnDisable()
+    {
+        spawner.ResetSpawn(indexSpawnedAt);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -43,6 +50,11 @@ public class EnemyAI : MonoBehaviour
 
         if (player != null && canFollow == true)
             agent.SetDestination(player.position);
+    }
+
+    public void SetSpawner(EnemySpawner enemySpawner)
+    {
+        spawner = enemySpawner;
     }
  
 }

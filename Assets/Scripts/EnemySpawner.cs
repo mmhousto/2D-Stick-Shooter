@@ -28,18 +28,25 @@ public class EnemySpawner : MonoBehaviour
                 clone.agent.enabled = false;
                 clone.transform.position = spawns[index].transform.position;
                 clone.agent.enabled = true;
+                clone.indexSpawnedAt = index;
+                clone.SetSpawner(this);
                 spawnedAtIndexes.Add(index);
-                StartCoroutine(ResetSpawn(index));
-
             }
             
         }
         
     }
 
-    IEnumerator ResetSpawn(int element)
+    public void ResetSpawn(int element)
     {
-        yield return new WaitForSeconds(5f);
+        StartCoroutine(ResetSpawnAfterTime(element));
+    }
+
+    IEnumerator ResetSpawnAfterTime(int element)
+    {
+        yield return new WaitForSeconds(10f);
         spawnedAtIndexes.Remove(element);
     }
+
+
 }
