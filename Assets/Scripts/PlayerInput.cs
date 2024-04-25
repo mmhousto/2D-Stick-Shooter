@@ -10,6 +10,7 @@ public class PlayerInput : MonoBehaviour
     public bool isStopping;
     public bool isFiring;
     public bool isLeftFiring;
+    public bool isAutoMoving;
 
     public void OnMove(InputValue value)
     {
@@ -24,6 +25,11 @@ public class PlayerInput : MonoBehaviour
     public void OnStop(InputValue value)
     {
         StopInput(value.isPressed);
+    }
+
+    public void OnAutoMove(InputValue value)
+    {
+        AutoMoveInput();
     }
 
     public void OnFire(InputValue value)
@@ -49,6 +55,11 @@ public class PlayerInput : MonoBehaviour
     public void StopInput(bool newState)
     {
         isStopping = newState;
+    }
+
+    public void AutoMoveInput()
+    {
+        isAutoMoving = !isAutoMoving;
     }
 
     public void FireInput(bool newState)

@@ -28,16 +28,24 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        _rb.velocity = _playerInput.move * moveSpeed;
+        if (_playerInput.isAutoMoving == false)
+        {
+            Time.timeScale = 1.0f;
+            _rb.velocity = _playerInput.move * moveSpeed;
 
-        if(_rb.velocity.x > MAX_VELOCITY) _rb.velocity = new Vector2(MAX_VELOCITY, _rb.velocity.y);
-        if(_rb.velocity.x < -MAX_VELOCITY) _rb.velocity = new Vector2(-MAX_VELOCITY, _rb.velocity.y);
-        if(_rb.velocity.y > MAX_VELOCITY) _rb.velocity = new Vector2(_rb.velocity.x, MAX_VELOCITY);
-        if(_rb.velocity.y < -MAX_VELOCITY) _rb.velocity = new Vector2(_rb.velocity.x, -MAX_VELOCITY);
+            if (_rb.velocity.x > MAX_VELOCITY) _rb.velocity = new Vector2(MAX_VELOCITY, _rb.velocity.y);
+            if (_rb.velocity.x < -MAX_VELOCITY) _rb.velocity = new Vector2(-MAX_VELOCITY, _rb.velocity.y);
+            if (_rb.velocity.y > MAX_VELOCITY) _rb.velocity = new Vector2(_rb.velocity.x, MAX_VELOCITY);
+            if (_rb.velocity.y < -MAX_VELOCITY) _rb.velocity = new Vector2(_rb.velocity.x, -MAX_VELOCITY);
 
-        if (_playerInput.move == Vector2.zero) _rb.velocity = Vector2.zero;
-        if (_playerInput.move.x == 0) _rb.velocity = new Vector2(0, _rb.velocity.y);
-        if (_playerInput.move.y == 0) _rb.velocity = new Vector2(_rb.velocity.x, 0);
+            if (_playerInput.move == Vector2.zero) _rb.velocity = Vector2.zero;
+            if (_playerInput.move.x == 0) _rb.velocity = new Vector2(0, _rb.velocity.y);
+            if (_playerInput.move.y == 0) _rb.velocity = new Vector2(_rb.velocity.x, 0);
+        }
+        else
+        {
+            Time.timeScale = 0.5f;
+        }
     }
 
     private void Stop()
