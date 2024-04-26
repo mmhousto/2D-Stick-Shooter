@@ -24,7 +24,8 @@ public class EnemyAI : MonoBehaviour
 
     private void OnDisable()
     {
-        spawner.ResetSpawn(indexSpawnedAt);
+        if(spawner != null)
+            spawner.ResetSpawn(indexSpawnedAt);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
