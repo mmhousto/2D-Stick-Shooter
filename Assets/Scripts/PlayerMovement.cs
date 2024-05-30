@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public float jumpForce = 10f; // Adjust this value to control the jump force
+    public float jumpDuration = 1f; // Adjust this value to control how long the jump lasts
+    private bool isJumping = false;
+    private float jumpStartTime;
+    private float initialZPosition;
     private PlayerInput _playerInput;
     private Rigidbody2D _rb;
     private float moveSpeed = 5f;
@@ -13,12 +18,15 @@ public class PlayerMovement : MonoBehaviour
     {
         _playerInput = GetComponent<PlayerInput>();
         _rb = GetComponent<Rigidbody2D>();
+        initialZPosition = transform.position.z;
     }
 
     // Update is called once per frame
     void Update()
     {
         Stop();
+
+        Jump();
     }
 
     private void FixedUpdate()
@@ -58,6 +66,44 @@ public class PlayerMovement : MonoBehaviour
         else if (_playerInput.isStopping == false && moveSpeed != 1f)
         {
             moveSpeed = 5f;
+        }
+    }
+
+    private void Jump()
+    {
+        if(_playerInput.isJumping && !isJumping)
+        {
+            StartJump();
+        }
+
+        if (isJumping)
+        {
+            UpdateJump();
+        }
+    }
+
+    void StartJump()
+    {
+        isJumping = true;
+        jumpStartTime = Time.time;
+        _rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+    }
+
+    void UpdateJump()
+    {
+        float elapsedTime = Time.time - jumpStartTime;
+        if (elapsedTime < jumpDuration)
+        {
+            // Calculate the z position based on the elapsed time
+            float jumpProgress = elapsedTime / jumpDuration;
+            float zPosition = Mathf.Lerp(initialZPosition, -jumpForce, jumpProgress);
+            transform.position = new Vector3(transform.position.x, transform.position.y, zPosition);
+        }
+        else
+        {
+            // End the jump
+            transform.position = new Vector3(transform.position.x, transform.position.y, initialZPosition);
+            isJumping = false;
         }
     }
 

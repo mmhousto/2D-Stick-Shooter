@@ -7,6 +7,7 @@ public class PlayerInput : MonoBehaviour
 {
     public Vector2 move;
     public Vector2 look;
+    public bool isJumping;
     public bool isStopping;
     public bool isFiring;
     public bool isLeftFiring;
@@ -20,6 +21,11 @@ public class PlayerInput : MonoBehaviour
     public void OnLook(InputValue value)
     {
         LookInput(value.Get<Vector2>());
+    }
+
+    public void OnJump(InputValue value)
+    {
+        JumpInput(value.isPressed);
     }
 
     public void OnStop(InputValue value)
@@ -50,6 +56,11 @@ public class PlayerInput : MonoBehaviour
     public void LookInput(Vector2 newLook)
     {
         look = newLook;
+    }
+
+    public void JumpInput(bool isPressed)
+    {
+        isJumping = isPressed;
     }
 
     public void StopInput(bool newState)
