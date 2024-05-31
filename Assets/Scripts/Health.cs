@@ -15,10 +15,13 @@ public class Health : MonoBehaviour
     {
         CurrentHealth = maxHealth;
         healthBar.value = CurrentHealth;
+        if (CompareTag("Enemy")) healthBar.gameObject.SetActive(false);
     }
 
     public void TakeDamage(int damageToTake)
     {
+        if (CompareTag("Enemy") && !healthBar.gameObject.activeInHierarchy) healthBar.gameObject.SetActive(true);
+
         CurrentHealth -= damageToTake;
         healthBar.value = CurrentHealth;
 

@@ -94,9 +94,16 @@ public class PlayerMovement : MonoBehaviour
         float elapsedTime = Time.time - jumpStartTime;
         if (elapsedTime < jumpDuration)
         {
-            // Calculate the z position based on the elapsed time
+            // Calculate the z position based on the elapsed time for the jump ascent
             float jumpProgress = elapsedTime / jumpDuration;
             float zPosition = Mathf.Lerp(initialZPosition, -jumpForce, jumpProgress);
+            transform.position = new Vector3(transform.position.x, transform.position.y, zPosition);
+        }
+        else if (elapsedTime < jumpDuration * 2)
+        {
+            // Calculate the z position based on the elapsed time for the jump descent
+            float fallProgress = (elapsedTime - jumpDuration) / jumpDuration;
+            float zPosition = Mathf.Lerp(-jumpForce, initialZPosition, fallProgress);
             transform.position = new Vector3(transform.position.x, transform.position.y, zPosition);
         }
         else
