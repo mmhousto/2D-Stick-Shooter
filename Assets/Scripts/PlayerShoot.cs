@@ -42,7 +42,11 @@ public class PlayerShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rightFacingDirection.transform.rotation = Quaternion.Euler(new Vector3(0, 0, GetAngleFromVector(_playerInput.look)));
+        if(_playerInput.look == Vector2.zero)
+            rightFacingDirection.transform.rotation = leftFacingDirection.transform.rotation;
+        else
+            rightFacingDirection.transform.rotation = Quaternion.Euler(new Vector3(0, 0, GetAngleFromVector(_playerInput.look)));
+
         leftFacingDirection.transform.rotation = Quaternion.Euler(new Vector3(0, 0, GetAngleFromVector(_playerInput.move)));
 
         CheckWeaponDirection();
