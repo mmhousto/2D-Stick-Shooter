@@ -12,6 +12,8 @@ public class PlayerInput : MonoBehaviour
     public bool isFiring;
     public bool isLeftFiring;
     public bool isAutoMoving;
+    public bool isInteracting;
+    public bool isPausing;
 
     public void OnMove(InputValue value)
     {
@@ -48,6 +50,16 @@ public class PlayerInput : MonoBehaviour
         LeftFireInput(value.isPressed);
     }
 
+    public void OnInteract(InputValue value)
+    {
+        InteractInput(value.isPressed);
+    }
+
+    public void OnPause(InputValue value)
+    {
+        PauseInput(value.isPressed);
+    }
+
     public void MoveInput(Vector2 newMove)
     {
         move = newMove;
@@ -81,5 +93,15 @@ public class PlayerInput : MonoBehaviour
     public void LeftFireInput(bool newState)
     {
         isLeftFiring = newState;
+    }
+
+    public void InteractInput(bool newState)
+    {
+        isInteracting = newState;
+    }
+
+    public void PauseInput(bool newState)
+    {
+        isPausing = newState;
     }
 }
