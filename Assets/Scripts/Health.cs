@@ -26,7 +26,11 @@ public class Health : MonoBehaviour
         healthBar.value = CurrentHealth;
 
         if (CurrentHealth <= 0 && CompareTag("Player")) Destroy(gameObject);
-        else if (CurrentHealth <= 0 && CompareTag("Enemy")) EnemyPool.instance.enemyPool.Release(GetComponent<EnemyAI>());
+        else if (CurrentHealth <= 0 && CompareTag("Enemy"))
+        {
+            XPManager.IncreaseXP(10);
+            EnemyPool.instance.enemyPool.Release(GetComponent<EnemyAI>());
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

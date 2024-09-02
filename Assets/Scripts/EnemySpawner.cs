@@ -19,7 +19,7 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(enemyPool.enemyPool.CountActive < spawns.Length) 
+        if(enemyPool.enemyPool.CountActive < enemyPool.spawnAmount) 
         {
             int index = Random.Range(0, spawns.Length);
             if (spawnedAtIndexes.Contains(index) == false)

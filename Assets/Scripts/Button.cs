@@ -17,8 +17,13 @@ public class Button : MonoBehaviour, IInteractable
 
     private IEnumerator BuildNavMesh()
     {
-        yield return new WaitForSeconds(.5f);
-        surface.BuildNavMeshAsync();
+        yield return null;
+        AsyncOperation operation = surface.BuildNavMeshAsync();
+        while (!operation.isDone)
+        {
+            yield return operation;
+        }
+        
     }
 
     public void Interact()

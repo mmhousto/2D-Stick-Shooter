@@ -14,7 +14,7 @@ public class Jumpable : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player") && collision.transform.GetComponent<PlayerInput>().isJumping && objectCollider.isTrigger == false)
+        if (collision.transform.CompareTag("Player") && collision.transform.GetComponent<GetPlayerInput>().isJumping && objectCollider.isTrigger == false)
         {
             Debug.Log("Colliding & Jumping");
             objectCollider.isTrigger = true;

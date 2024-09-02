@@ -10,10 +10,8 @@ public class EnemyPool : MonoBehaviour
     public EnemyAI enemyPrefab;
     public ObjectPool<EnemyAI> enemyPool;
 
-    [SerializeField]
-    private int spawnAmount = 20;
-    [SerializeField]
-    private int spawnMax = 100;
+    public int spawnAmount = 20;
+    public int spawnMax = 100;
 
     private void Awake()
     {
@@ -30,7 +28,7 @@ public class EnemyPool : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemyPool = new ObjectPool<EnemyAI>(CreateObject, OnGet, OnRelease, OnEnd, false, spawnAmount, 40);
+        enemyPool = new ObjectPool<EnemyAI>(CreateObject, OnGet, OnRelease, OnEnd, false, spawnAmount, spawnMax);
     }
 
     private EnemyAI CreateObject()

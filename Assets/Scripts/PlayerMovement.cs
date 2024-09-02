@@ -9,14 +9,14 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping = false;
     private float jumpStartTime;
     private float initialZPosition;
-    private PlayerInput _playerInput;
+    private GetPlayerInput _playerInput;
     private Rigidbody2D _rb;
     private float moveSpeed = 5f;
     private float MAX_VELOCITY = 15f;
     // Start is called before the first frame update
     void Start()
     {
-        _playerInput = GetComponent<PlayerInput>();
+        _playerInput = GetComponent<GetPlayerInput>();
         _rb = GetComponent<Rigidbody2D>();
         initialZPosition = transform.position.z;
     }

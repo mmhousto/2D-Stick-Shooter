@@ -8,8 +8,8 @@ public class EnemyAI : MonoBehaviour
     public Transform player;
     public NavMeshAgent agent;
     public int indexSpawnedAt = -1;
-    private EnemySpawner spawner;
-    private bool canFollow;
+    protected EnemySpawner spawner;
+    protected bool canFollow;
 
     private void Start()
     {

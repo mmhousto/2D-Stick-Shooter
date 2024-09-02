@@ -8,13 +8,13 @@ public class SlowMo : MonoBehaviour
     public Slider slowMoMeter;
     public float slowMoValue;
     private float maxSlowMo = 5;
-    private PlayerInput playerInput;
+    private GetPlayerInput playerInput;
     private Coroutine endSlowMo;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = GetComponent<GetPlayerInput>();
         slowMoValue = maxSlowMo;
         slowMoMeter.value = slowMoValue;
     }

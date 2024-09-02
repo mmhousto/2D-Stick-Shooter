@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
-    private PlayerInput _playerInput;
+    private GetPlayerInput _playerInput;
     public GameObject bulletPrefab;
     public GameObject rightFacingDirection;
     public GameObject leftFacingDirection;
@@ -30,7 +30,7 @@ public class PlayerShoot : MonoBehaviour
     void Start()
     {
         bulletPool = BulletPool.instance;
-        _playerInput = GetComponent<PlayerInput>();
+        _playerInput = GetComponent<GetPlayerInput>();
         rightWeaponAnim = rightWeapon.GetComponent<Animator>();
         leftWeaponAnim = leftWeapon.GetComponent<Animator>();
         canFire = true;
@@ -42,6 +42,7 @@ public class PlayerShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(PauseManager.isPaused) return;
         RotateWeapons();
 
         CheckWeaponDirection();
@@ -57,7 +58,8 @@ public class PlayerShoot : MonoBehaviour
         else
             rightFacingDirection.transform.rotation = Quaternion.Euler(new Vector3(0, 0, GetAngleFromVector(_playerInput.look)));
 
-        leftFacingDirection.transform.rotation = Quaternion.Euler(new Vector3(0, 0, GetAngleFromVector(_playerInput.move)));
+        if(_playerInput.move != Vector2.zero)
+            leftFacingDirection.transform.rotation = Quaternion.Euler(new Vector3(0, 0, GetAngleFromVector(_playerInput.move)));
     }
 
     void CheckWeaponDirection()

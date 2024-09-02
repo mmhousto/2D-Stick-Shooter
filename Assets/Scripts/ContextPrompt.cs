@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ContextPrompt : MonoBehaviour
 {
-    private PlayerInput input;
+    private GetPlayerInput input;
     private GameObject contextPrompt;
     private TextMeshProUGUI context;
     private Image contextImage;
@@ -14,7 +14,7 @@ public class ContextPrompt : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        input = GetComponent<PlayerInput>();
+        input = GetComponent<GetPlayerInput>();
         contextPrompt = GameObject.FindWithTag("ContextPrompt");
         context = contextPrompt.GetComponentInChildren<TextMeshProUGUI>(true);
         contextImage = contextPrompt.GetComponentInChildren<Image>(true);
