@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Jumpable : MonoBehaviour
 {
-    private Collider2D objectCollider;
+    public Collider2D objectCollider;
 
     // Start is called before the first frame update
     void Start()
     {
-        objectCollider = GetComponent<Collider2D>();
+        objectCollider = GetComponent<BoxCollider2D>();
     }
 
     private void OnCollisionStay2D(Collision2D collision)

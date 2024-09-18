@@ -20,7 +20,7 @@ public class PlayerShoot : MonoBehaviour
     private Vector3 posSpawnLocation = new Vector3(0.48f, 0.16f, 0);
     private Vector3 negSpawnLocation = new Vector3(0.48f, -0.16f, 0);
     private float shotStrength = 25f;
-    private float fireTime = 0.35f;
+    private static float fireTime = 0.35f;
     private float leftTime;
     private float rightTime;
     private bool canFire;
@@ -37,6 +37,7 @@ public class PlayerShoot : MonoBehaviour
         canLeftFire = true;
         leftTime = 0;
         rightTime = 0;
+        fireTime = 0.35f;
     }
 
     // Update is called once per frame
@@ -153,5 +154,10 @@ public class PlayerShoot : MonoBehaviour
         vector = vector.normalized;
         float angle = Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
         return (angle < 0) ? angle + 360 : angle;
+    }
+
+    public static void IncreaseFireRate()
+    {
+        fireTime = fireTime - fireTime * 0.1f;
     }
 }

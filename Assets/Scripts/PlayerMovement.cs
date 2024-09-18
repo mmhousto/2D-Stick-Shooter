@@ -13,17 +13,20 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rb;
     private float moveSpeed = 5f;
     private float MAX_VELOCITY = 15f;
+    private static float playerMovementSpeed;
     // Start is called before the first frame update
     void Start()
     {
         _playerInput = GetComponent<GetPlayerInput>();
         _rb = GetComponent<Rigidbody2D>();
         initialZPosition = transform.position.z;
+        playerMovementSpeed = moveSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
+        UpdateMovementSpeed();
         Stop();
 
         Jump();
@@ -63,9 +66,9 @@ public class PlayerMovement : MonoBehaviour
             moveSpeed = 0;
             _rb.velocity = Vector2.zero;
         }
-        else if (_playerInput.isStopping == false && moveSpeed != 1f)
+        else if (_playerInput.isStopping == false && moveSpeed != playerMovementSpeed)
         {
-            moveSpeed = 5f;
+            moveSpeed = playerMovementSpeed;
         }
     }
 
@@ -112,6 +115,17 @@ public class PlayerMovement : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y, initialZPosition);
             isJumping = false;
         }
+    }
+
+    private void UpdateMovementSpeed()
+    {
+        if(moveSpeed != 0 && moveSpeed != playerMovementSpeed)
+            moveSpeed = playerMovementSpeed;
+    }
+
+    public static void IncreaseMovementSpeed()
+    {
+        playerMovementSpeed = playerMovementSpeed + playerMovementSpeed * 0.1f;
     }
 
 }

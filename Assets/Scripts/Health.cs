@@ -42,15 +42,23 @@ public class Health : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnCollisionExit2D (Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            
+            isColliding = false;
         }
     }
 
-    private void OnCollisionExit2D (Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            isColliding = false;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
@@ -65,6 +73,14 @@ public class Health : MonoBehaviour
             TakeDamage(5);
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+    public void IncreaseMaxHP()
+    {
+        maxHealth = maxHealth + (int)(maxHealth * 0.1f);
+        healthBar.maxValue = maxHealth;
+        CurrentHealth = maxHealth;
+        healthBar.value = CurrentHealth;
     }
 
 }

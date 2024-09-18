@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 4089625381139217126}
   - component: {fileID: 7032449501477291578}
   - component: {fileID: 3752544176970722551}
+  - component: {fileID: -12951581750409115}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -415,6 +416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   agent: {fileID: 4089625381139217126}
+  indexSpawnedAt: 0
 --- !u!195 &4089625381139217126
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -485,6 +487,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 10
+--- !u!114 &-12951581750409115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7339821866432265436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a716d2b2fd5aebc40bb92cba8261f391, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectCollider: {fileID: 0}
 --- !u!1 &7610232635439237572
 GameObject:
   m_ObjectHideFlags: 0

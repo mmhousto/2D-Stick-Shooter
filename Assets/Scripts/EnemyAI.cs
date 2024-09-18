@@ -36,14 +36,6 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            canFollow = false;
-        }
-    }
-
     private void Update()
     {
         if (player == null && GameObject.FindWithTag("Player"))
