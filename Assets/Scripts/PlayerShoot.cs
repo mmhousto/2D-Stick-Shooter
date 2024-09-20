@@ -159,5 +159,6 @@ public class PlayerShoot : MonoBehaviour
     public static void IncreaseFireRate()
     {
         fireTime = fireTime - fireTime * 0.1f;
+        Time.timeScale = 1f;
     }
 }

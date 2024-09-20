@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - SpawnPoint
   - ContextPrompt
+  - UpgradeManager
   layers:
   - Default
   - TransparentFX

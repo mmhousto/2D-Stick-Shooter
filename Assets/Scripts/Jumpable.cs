@@ -16,7 +16,6 @@ public class Jumpable : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player") && collision.transform.GetComponent<GetPlayerInput>().isJumping && objectCollider.isTrigger == false)
         {
-            Debug.Log("Colliding & Jumping");
             objectCollider.isTrigger = true;
         }
     }
@@ -25,7 +24,6 @@ public class Jumpable : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("Jumped Over");
             objectCollider.isTrigger = false;
         }
     }

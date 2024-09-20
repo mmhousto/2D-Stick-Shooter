@@ -51,6 +51,10 @@ public class XPManager : MonoBehaviour
         if (xp > maxXP)
         {
             level++;
+            if(level % 2 == 0)
+            {
+                UpgradeManager.ShowUpgradeMenu();
+            }
             xp = minXP;
             maxXP = (int)(100 * Mathf.Pow(1.9f, level - 1));
         }

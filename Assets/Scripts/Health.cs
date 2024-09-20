@@ -81,6 +81,7 @@ public class Health : MonoBehaviour
         healthBar.maxValue = maxHealth;
         CurrentHealth = maxHealth;
         healthBar.value = CurrentHealth;
+        Time.timeScale = 1f;
     }
 
 }

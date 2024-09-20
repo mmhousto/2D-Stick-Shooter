@@ -126,6 +126,7 @@ public class PlayerMovement : MonoBehaviour
     public static void IncreaseMovementSpeed()
     {
         playerMovementSpeed = playerMovementSpeed + playerMovementSpeed * 0.1f;
+        Time.timeScale = 1f;
     }
 
 }

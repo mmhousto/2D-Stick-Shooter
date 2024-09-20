@@ -38,6 +38,14 @@ public class SlowMo : MonoBehaviour
         }
     }
 
+    public void IncreaseMaxSlowMo()
+    {
+        maxSlowMo += maxSlowMo * 0.1f;
+        slowMoValue = maxSlowMo;
+        slowMoMeter.value = slowMoValue;
+        Time.timeScale = 1f;
+    }
+
     IEnumerator StartRegenSlowMo()
     {
         yield return new WaitForSeconds(5f);
