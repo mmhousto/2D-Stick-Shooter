@@ -7,7 +7,7 @@ public class SlowMo : MonoBehaviour
 {
     public Slider slowMoMeter;
     public float slowMoValue;
-    private float maxSlowMo = 5;
+    private float maxSlowMo = 1.5f;
     private GetPlayerInput playerInput;
     private Coroutine endSlowMo;
 
@@ -16,6 +16,7 @@ public class SlowMo : MonoBehaviour
     {
         playerInput = GetComponent<GetPlayerInput>();
         slowMoValue = maxSlowMo;
+        slowMoMeter.maxValue = maxSlowMo;
         slowMoMeter.value = slowMoValue;
     }
 
@@ -23,7 +24,7 @@ public class SlowMo : MonoBehaviour
     {
         if (playerInput != null && playerInput.isAutoMoving && slowMoValue > 0)
         {
-            slowMoValue -= Time.deltaTime;
+            slowMoValue -= Time.deltaTime * 2;
             slowMoMeter.value = slowMoValue;
         }
         else if (playerInput != null && playerInput.isAutoMoving == false && slowMoValue < maxSlowMo && endSlowMo == null)
