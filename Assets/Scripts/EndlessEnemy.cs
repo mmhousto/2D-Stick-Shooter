@@ -11,6 +11,10 @@ public class EndlessEnemy : EnemyAI
         agent.updateRotation = false;
         agent.updateUpAxis = false;
 
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+            originalColor = spriteRenderer.color;
+
         if (GameObject.FindWithTag("Player") != null)
             player = GameObject.FindWithTag("Player").transform;
         canFollow = true;

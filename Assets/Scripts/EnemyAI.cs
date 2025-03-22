@@ -11,8 +11,8 @@ public class EnemyAI : MonoBehaviour
     protected EnemySpawner spawner;
     protected bool canFollow;
 
-    private SpriteRenderer spriteRenderer;
-    private Color originalColor;
+    protected SpriteRenderer spriteRenderer;
+    protected Color originalColor;
 
     private void Start()
     {
@@ -65,7 +65,7 @@ public class EnemyAI : MonoBehaviour
         StartCoroutine(KnockbackCoroutine());
     }
 
-    private IEnumerator KnockbackCoroutine()
+    protected IEnumerator KnockbackCoroutine()
     {
         Vector3 velocity = agent.velocity;
         agent.isStopped = true;
