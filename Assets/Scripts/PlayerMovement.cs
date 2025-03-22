@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private float initialZPosition;
     private GetPlayerInput _playerInput;
     private Rigidbody2D _rb;
+    [SerializeField]
     private float moveSpeed = 5f;
     private float MAX_VELOCITY = 15f;
     private static float playerMovementSpeed;
@@ -42,16 +43,16 @@ public class PlayerMovement : MonoBehaviour
         if (_playerInput.isAutoMoving == false)
         {
             Time.timeScale = 1.0f;
-            _rb.velocity = _playerInput.move * moveSpeed;
+            _rb.linearVelocity = _playerInput.move * moveSpeed;
 
-            if (_rb.velocity.x > MAX_VELOCITY) _rb.velocity = new Vector2(MAX_VELOCITY, _rb.velocity.y);
-            if (_rb.velocity.x < -MAX_VELOCITY) _rb.velocity = new Vector2(-MAX_VELOCITY, _rb.velocity.y);
-            if (_rb.velocity.y > MAX_VELOCITY) _rb.velocity = new Vector2(_rb.velocity.x, MAX_VELOCITY);
-            if (_rb.velocity.y < -MAX_VELOCITY) _rb.velocity = new Vector2(_rb.velocity.x, -MAX_VELOCITY);
+            if (_rb.linearVelocity.x > MAX_VELOCITY) _rb.linearVelocity = new Vector2(MAX_VELOCITY, _rb.linearVelocity.y);
+            if (_rb.linearVelocity.x < -MAX_VELOCITY) _rb.linearVelocity = new Vector2(-MAX_VELOCITY, _rb.linearVelocity.y);
+            if (_rb.linearVelocity.y > MAX_VELOCITY) _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, MAX_VELOCITY);
+            if (_rb.linearVelocity.y < -MAX_VELOCITY) _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, -MAX_VELOCITY);
 
-            if (_playerInput.move == Vector2.zero) _rb.velocity = Vector2.zero;
-            if (_playerInput.move.x == 0) _rb.velocity = new Vector2(0, _rb.velocity.y);
-            if (_playerInput.move.y == 0) _rb.velocity = new Vector2(_rb.velocity.x, 0);
+            if (_playerInput.move == Vector2.zero) _rb.linearVelocity = Vector2.zero;
+            if (_playerInput.move.x == 0) _rb.linearVelocity = new Vector2(0, _rb.linearVelocity.y);
+            if (_playerInput.move.y == 0) _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 0);
         }
         else
         {
@@ -64,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
         if (_playerInput.isStopping && moveSpeed != 0)
         {
             moveSpeed = 0;
-            _rb.velocity = Vector2.zero;
+            _rb.linearVelocity = Vector2.zero;
         }
         else if (_playerInput.isStopping == false && moveSpeed != playerMovementSpeed)
         {
@@ -100,14 +101,19 @@ public class PlayerMovement : MonoBehaviour
             // Calculate the z position based on the elapsed time for the jump ascent
             float jumpProgress = elapsedTime / jumpDuration;
             float zPosition = Mathf.Lerp(initialZPosition, -jumpForce, jumpProgress);
-            transform.position = new Vector3(transform.position.x, transform.position.y, zPosition);
+            Vector3 start = new Vector3(transform.position.x, transform.position.y, zPosition);
+            Vector3 end = new Vector3(transform.position.x + _playerInput.move.x/1000, transform.position.y + _playerInput.move.y/1000, zPosition);
+            transform.position = Vector3.Lerp(start, end, jumpProgress);
         }
         else if (elapsedTime < jumpDuration * 2)
         {
+            
             // Calculate the z position based on the elapsed time for the jump descent
             float fallProgress = (elapsedTime - jumpDuration) / jumpDuration;
             float zPosition = Mathf.Lerp(-jumpForce, initialZPosition, fallProgress);
-            transform.position = new Vector3(transform.position.x, transform.position.y, zPosition);
+            Vector3 start = new Vector3(transform.position.x, transform.position.y, zPosition);
+            Vector3 end = new Vector3(transform.position.x + _playerInput.move.x/1000, transform.position.y + _playerInput.move.y/1000, zPosition);
+            transform.position = Vector3.Lerp(start, end, fallProgress);
         }
         else
         {

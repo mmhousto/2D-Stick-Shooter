@@ -21,6 +21,7 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            collision.gameObject.GetComponent<EnemyAI>().Knockback();
             collision.gameObject.GetComponent<Health>().TakeDamage(25);
             
         }

@@ -11,20 +11,30 @@ public class EnemyAI : MonoBehaviour
     protected EnemySpawner spawner;
     protected bool canFollow;
 
+    private SpriteRenderer spriteRenderer;
+    private Color originalColor;
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
 
-        if(GameObject.FindWithTag("Player") != null)
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+            originalColor = spriteRenderer.color;
+
+        if (GameObject.FindWithTag("Player") != null)
             player = GameObject.FindWithTag("Player").transform;
         canFollow = false;
     }
 
     private void OnDisable()
     {
-        if(spawner != null)
+        if (spriteRenderer != null)
+            spriteRenderer.color = originalColor;
+
+        if (spawner != null)
             spawner.ResetSpawn(indexSpawnedAt);
     }
 
@@ -49,5 +59,27 @@ public class EnemyAI : MonoBehaviour
     {
         spawner = enemySpawner;
     }
- 
+
+    public void Knockback()
+    {
+        StartCoroutine(KnockbackCoroutine());
+    }
+
+    private IEnumerator KnockbackCoroutine()
+    {
+        Vector3 velocity = agent.velocity;
+        agent.isStopped = true;
+        if (spriteRenderer != null)
+            spriteRenderer.color = new Color(128, 0, 0);
+
+        transform.Translate(-velocity.normalized * .1f);
+
+        yield return new WaitForSeconds(0.25f);
+
+        if (spriteRenderer != null)
+            spriteRenderer.color = originalColor;
+
+        agent.isStopped = false;
+    }
+
 }

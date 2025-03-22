@@ -9,6 +9,7 @@ public class XPManager : MonoBehaviour
 {
     public Slider xpBar;
     public TextMeshProUGUI levelLabel;
+    public static Health health;
     public static int level;
     public static int xp;
     private static int minXP;
@@ -25,6 +26,7 @@ public class XPManager : MonoBehaviour
         xpBar.minValue = minXP;
         xpBar.maxValue = maxXP;
         xpBar.value = xp;
+        health = GameObject.FindWithTag("Player").GetComponent<Health>();
     }
 
     // Update is called once per frame
@@ -50,11 +52,9 @@ public class XPManager : MonoBehaviour
         xp += xpToIncrease;
         if (xp > maxXP)
         {
+            health.GetFullHP();
             level++;
-            if(level % 2 == 0)
-            {
-                UpgradeManager.ShowUpgradeMenu();
-            }
+            UpgradeManager.ShowUpgradeMenu();
             xp = minXP;
             maxXP = (int)(100 * Mathf.Pow(1.9f, level - 1));
         }

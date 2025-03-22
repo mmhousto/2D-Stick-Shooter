@@ -42,7 +42,7 @@ public class BulletPool : MonoBehaviour
 
     private void OnRelease(Bullet bullet)
     {
-        bullet.rb.velocity = Vector3.zero;
+        bullet.rb.linearVelocity = Vector3.zero;
         bullet.gameObject.SetActive(false);
     }
 

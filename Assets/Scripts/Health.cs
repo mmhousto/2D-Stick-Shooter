@@ -8,7 +8,7 @@ public class Health : MonoBehaviour
 {
     public int CurrentHealth { get; private set; }
     public Slider healthBar;
-    private int maxHealth = 100;
+    public int maxHealth = 100;
     private bool isColliding;
 
     private void OnEnable()
@@ -73,6 +73,12 @@ public class Health : MonoBehaviour
             TakeDamage(5);
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+    public void GetFullHP()
+    {
+        CurrentHealth = maxHealth;
+        healthBar.value = CurrentHealth;
     }
 
     public void IncreaseMaxHP()
