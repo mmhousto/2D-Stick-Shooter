@@ -101,8 +101,8 @@ public class PlayerMovement : MonoBehaviour
             // Calculate the z position based on the elapsed time for the jump ascent
             float jumpProgress = elapsedTime / jumpDuration;
             float zPosition = Mathf.Lerp(initialZPosition, -jumpForce, jumpProgress);
-            Vector3 start = new Vector3(transform.position.x, transform.position.y, zPosition);
-            Vector3 end = new Vector3(transform.position.x + _playerInput.move.x/1000, transform.position.y + _playerInput.move.y/1000, zPosition);
+            Vector3 start = new Vector3(transform.position.x + _playerInput.move.x / 750, transform.position.y + _playerInput.move.y / 750, zPosition);
+            Vector3 end = new Vector3(transform.position.x + _playerInput.move.x/750, transform.position.y + _playerInput.move.y/750, zPosition);
             transform.position = Vector3.Lerp(start, end, jumpProgress);
         }
         else if (elapsedTime < jumpDuration * 2)
@@ -111,8 +111,8 @@ public class PlayerMovement : MonoBehaviour
             // Calculate the z position based on the elapsed time for the jump descent
             float fallProgress = (elapsedTime - jumpDuration) / jumpDuration;
             float zPosition = Mathf.Lerp(-jumpForce, initialZPosition, fallProgress);
-            Vector3 start = new Vector3(transform.position.x, transform.position.y, zPosition);
-            Vector3 end = new Vector3(transform.position.x + _playerInput.move.x/1000, transform.position.y + _playerInput.move.y/1000, zPosition);
+            Vector3 start = new Vector3(transform.position.x + _playerInput.move.x / 750, transform.position.y + _playerInput.move.y / 750, zPosition);
+            Vector3 end = new Vector3(transform.position.x + _playerInput.move.x / 750, transform.position.y + _playerInput.move.y / 750, zPosition);
             transform.position = Vector3.Lerp(start, end, fallProgress);
         }
         else

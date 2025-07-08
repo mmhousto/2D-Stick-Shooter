@@ -15,12 +15,12 @@ public class Health : MonoBehaviour
     {
         CurrentHealth = maxHealth;
         healthBar.value = CurrentHealth;
-        if (CompareTag("Enemy")) healthBar.gameObject.SetActive(false);
+        if (CompareTag("Enemy") || CompareTag("Breakable")) healthBar.gameObject.SetActive(false);
     }
 
     public void TakeDamage(int damageToTake)
     {
-        if (CompareTag("Enemy") && !healthBar.gameObject.activeInHierarchy) healthBar.gameObject.SetActive(true);
+        if ((CompareTag("Enemy") || CompareTag("Breakable")) && !healthBar.gameObject.activeInHierarchy) healthBar.gameObject.SetActive(true);
 
         CurrentHealth -= damageToTake;
         healthBar.value = CurrentHealth;
@@ -31,6 +31,11 @@ public class Health : MonoBehaviour
             XPManager.IncreaseXP(10);
             EnemyPool.instance.enemyPool.Release(GetComponent<EnemyAI>());
         }
+        else if (CurrentHealth <= 0 && CompareTag("Breakable"))
+        {
+            Destroy(gameObject);
+        }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

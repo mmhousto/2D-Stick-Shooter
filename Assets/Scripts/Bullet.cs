@@ -6,25 +6,46 @@ public class Bullet : MonoBehaviour
 {
 
     public Rigidbody2D rb;
+    public AudioClip hitSound, zombieHitSound;
+    private AudioSource hitSource;
     private BulletPool pool;
+    private ParticleSystem bulletHitEffect;
 
     // Start is called before the first frame update
     void Start()
     {
+        bulletHitEffect = GameObject.FindWithTag("BulletHitEffect").GetComponent<ParticleSystem>();
         pool = BulletPool.instance;
         rb = GetComponent<Rigidbody2D>();
+        hitSource = bulletHitEffect.GetComponent<AudioSource>();
         //Destroy(gameObject, 2.5f);
         Invoke(nameof(DisableObject), 2.5f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if(collision != null)
+            PlayHitEffect(collision.GetContact(0).point);
+
+        if(collision.gameObject.TryGetComponent(out EnemyAI enemy))
         {
-            collision.gameObject.GetComponent<EnemyAI>().Knockback();
-            collision.gameObject.GetComponent<Health>().TakeDamage(25);
-            
+            enemy.Knockback();
         }
+
+        if(collision.gameObject.TryGetComponent(out Health health))
+        {
+            health.TakeDamage(25);
+        }
+
+        if (collision.transform.CompareTag("Enemy"))
+        {
+            hitSource.PlayOneShot(zombieHitSound);
+        }
+        else
+        {
+            hitSource.PlayOneShot(hitSound);
+        }
+
         //Destroy(gameObject);
         DisableObject();
     }
@@ -35,5 +56,10 @@ public class Bullet : MonoBehaviour
         //gameObject.SetActive(false);
     }
 
-
+    private void PlayHitEffect(Vector2 hitSpot)
+    {
+        bulletHitEffect.Stop();
+        bulletHitEffect.transform.position = hitSpot;
+        bulletHitEffect.Play();
+    }
 }

@@ -62,7 +62,8 @@ public class EnemyAI : MonoBehaviour
 
     public void Knockback()
     {
-        StartCoroutine(KnockbackCoroutine());
+        if(gameObject.activeInHierarchy)
+            StartCoroutine(KnockbackCoroutine());
     }
 
     protected IEnumerator KnockbackCoroutine()
@@ -70,11 +71,11 @@ public class EnemyAI : MonoBehaviour
         Vector3 velocity = agent.velocity;
         agent.isStopped = true;
         if (spriteRenderer != null)
-            spriteRenderer.color = new Color(128, 0, 0);
+            spriteRenderer.color = new Color(255, 50, 50);
 
         transform.Translate(-velocity.normalized * .1f);
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.15f);
 
         if (spriteRenderer != null)
             spriteRenderer.color = originalColor;

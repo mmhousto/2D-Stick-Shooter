@@ -13,6 +13,7 @@ public class PlayerShoot : MonoBehaviour
     public SpriteRenderer leftWeapon;
     public SpriteRenderer rightWeapon;
 
+    private AudioSource playerSoundEffects;
     private BulletPool bulletPool;
     private Animator rightWeaponAnim;
     private Animator leftWeaponAnim;
@@ -29,6 +30,7 @@ public class PlayerShoot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerSoundEffects = GetComponent<AudioSource>();
         bulletPool = BulletPool.instance;
         _playerInput = GetComponent<GetPlayerInput>();
         rightWeaponAnim = rightWeapon.GetComponent<Animator>();
@@ -133,6 +135,7 @@ public class PlayerShoot : MonoBehaviour
 
     void FireProjectile()
     {
+        playerSoundEffects.Play();
         var clone = bulletPool.bulletPool.Get();
         clone.transform.position = bulletRightSpawn.transform.position;
         clone.transform.rotation = bulletRightSpawn.transform.rotation;
@@ -142,6 +145,7 @@ public class PlayerShoot : MonoBehaviour
 
     void FireLeftProjectile()
     {
+        playerSoundEffects.Play();
         var clone = bulletPool.bulletPool.Get();
         clone.transform.position = bulletLeftSpawn.transform.position;
         clone.transform.rotation = bulletLeftSpawn.transform.rotation;

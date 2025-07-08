@@ -332,9 +332,89 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6597354561256018707}
     m_Modifications:
+    - target: {fileID: 879655998393980779, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 879655998393980779, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 879655998393980779, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 879655998393980779, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GoHome
+      objectReference: {fileID: 0}
+    - target: {fileID: 879655998393980779, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 879655998393980779, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1758293153544553836, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_Name
+      value: Options
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838013237662863295, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838013237662863295, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838013237662863295, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190335
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010081071748537767, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010081071748537767, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010081071748537767, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010081071748537767, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PauseResume
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010081071748537767, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010081071748537767, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4709611660982889308, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_Name
+      value: HOME
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636285139079503786, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_text
+      value: HOME
+      objectReference: {fileID: 0}
+    - target: {fileID: 7253953658307371408, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_Name
+      value: Resume
+      objectReference: {fileID: 0}
     - target: {fileID: 7272129058842226862, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
       propertyPath: m_Name
       value: Pause Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 7272129058842226862, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7584979536489437366, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
       propertyPath: m_Pivot.x
@@ -414,6 +494,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7584979536489437366, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7822379129020056464, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7822379129020056464, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7822379129020056464, guid: e2f4481e5c02d7f41bd91773cc0461ce, type: 3}
+      propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -784,6 +876,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: UpgradeManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2014954231692557822, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_Name
+      value: UpgradeFireRate
+      objectReference: {fileID: 0}
+    - target: {fileID: 2239443466765858388, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_Name
+      value: UpgradeSpeed
+      objectReference: {fileID: 0}
     - target: {fileID: 3467332873237661234, guid: deb7159887567ce40a608aaa240ce090, type: 3}
       propertyPath: upgradeButtons.Array.size
       value: 4
@@ -805,20 +905,96 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8728847876060098674}
     - target: {fileID: 4264732920778329259, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_fontSize
+      value: 41.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4264732920778329259, guid: deb7159887567ce40a608aaa240ce090, type: 3}
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
       value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 4597550952717321985, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_fontSize
+      value: 41.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4597550952717321985, guid: deb7159887567ce40a608aaa240ce090, type: 3}
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
       value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 5312701635764333783, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5312701635764333783, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5312701635764333783, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190335
+      objectReference: {fileID: 0}
+    - target: {fileID: 6277279619594307963, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_fontSize
+      value: 41.3
       objectReference: {fileID: 0}
     - target: {fileID: 6277279619594307963, guid: deb7159887567ce40a608aaa240ce090, type: 3}
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
       value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 6366572527936787354, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_fontSize
+      value: 41.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6366572527936787354, guid: deb7159887567ce40a608aaa240ce090, type: 3}
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
       value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 7182522823235458135, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_Spacing
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7182522823235458135, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_Padding.m_Top
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7182522823235458135, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_ChildAlignment
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7182522823235458135, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_Padding.m_Left
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7182522823235458135, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_Padding.m_Right
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7182522823235458135, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_Padding.m_Bottom
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212627488536498096, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212627488536498096, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212627488536498096, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212627488536498096, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8630217685120825390, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_Name
+      value: UpgradeSlowMo
+      objectReference: {fileID: 0}
+    - target: {fileID: 8683866109976421071, guid: deb7159887567ce40a608aaa240ce090, type: 3}
+      propertyPath: m_Name
+      value: UpgradeHealth
       objectReference: {fileID: 0}
     - target: {fileID: 8921970955352438057, guid: deb7159887567ce40a608aaa240ce090, type: 3}
       propertyPath: m_Pivot.x
