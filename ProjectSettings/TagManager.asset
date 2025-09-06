@@ -11,6 +11,12 @@ TagManager:
   - UpgradeManager
   - Breakable
   - BulletHitEffect
+  - MyPlayer
+  - Health
+  - SlowMo
+  - XP
+  - PlayerCam
+  - PauseHandler
   layers:
   - Default
   - TransparentFX

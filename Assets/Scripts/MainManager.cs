@@ -14,9 +14,9 @@ public class MainManager : NetworkBehaviour
     public GameObject createJoin, sessions, playerList, modesGroupCoop, storyButton, endlessButton, readyButton, leaveButton;
 
     public enum Players { Solo, Coop }
-    public Players players;
+    public static Players players;
     public enum Mode { Story, Endless }
-    public Mode mode;
+    public static Mode mode;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -107,6 +107,18 @@ public class MainManager : NetworkBehaviour
     {
         mode = Mode.Endless;
         SceneManager.LoadScene(2);
+    }
+
+    public void PlayCOOPStory()
+    {
+        mode = Mode.Story;
+        NetworkManager.SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
+    }
+
+    public void PlayCOOPEndless()
+    {
+        mode = Mode.Endless;
+        NetworkManager.SceneManager.LoadScene("Endless", LoadSceneMode.Single);
     }
 
     public void QuitGame()

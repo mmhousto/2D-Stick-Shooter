@@ -958,10 +958,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 529313608135572308, guid: f717ef2b91dd4824aa6a93448c19a889, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 92704779}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f717ef2b91dd4824aa6a93448c19a889, type: 3}
 --- !u!224 &92704777 stripped
 RectTransform:
@@ -973,21 +970,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 529313608135572308, guid: f717ef2b91dd4824aa6a93448c19a889, type: 3}
   m_PrefabInstance: {fileID: 92704776}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &92704779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 92704778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa833722b0cb66a4da0056deab9be836, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SessionLeft:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &120215841
 GameObject:
   m_ObjectHideFlags: 0
@@ -2105,7 +2087,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5347658756170696547, guid: f717ef2b91dd4824aa6a93448c19a889, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PlayEndless
+      value: PlayCOOPEndless
       objectReference: {fileID: 0}
     - target: {fileID: 5347658756170696547, guid: f717ef2b91dd4824aa6a93448c19a889, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -6510,8 +6492,6 @@ MonoBehaviour:
   endlessButton: {fileID: 231860607}
   readyButton: {fileID: 92704778}
   leaveButton: {fileID: 309730992}
-  players: 0
-  mode: 0
 --- !u!4 &1245594374
 Transform:
   m_ObjectHideFlags: 0
@@ -7371,7 +7351,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5347658756170696547, guid: f717ef2b91dd4824aa6a93448c19a889, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PlayStory
+      value: PlayCOOPStory
       objectReference: {fileID: 0}
     - target: {fileID: 5347658756170696547, guid: f717ef2b91dd4824aa6a93448c19a889, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

@@ -1,19 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Health : MonoBehaviour
+public class Health : NetworkBehaviour
 {
     public int CurrentHealth { get; private set; }
-    public Slider healthBar;
+    public NetworkVariable<int> HealthAmount = new NetworkVariable<int>();
+    private Slider healthBar;
     public int maxHealth = 100;
     private bool isColliding;
 
     private void OnEnable()
     {
+        if (CompareTag("Player"))
+            healthBar = GameObject.FindWithTag("Health").GetComponent<Slider>();
+        else
+            healthBar = GetComponentInChildren<Slider>();
         CurrentHealth = maxHealth;
+        if(IsOwner)
+            HealthAmount.Value = CurrentHealth;
         healthBar.value = CurrentHealth;
         if (CompareTag("Enemy") || CompareTag("Breakable")) healthBar.gameObject.SetActive(false);
     }
@@ -23,9 +31,18 @@ public class Health : MonoBehaviour
         if ((CompareTag("Enemy") || CompareTag("Breakable")) && !healthBar.gameObject.activeInHierarchy) healthBar.gameObject.SetActive(true);
 
         CurrentHealth -= damageToTake;
+        if (IsServer)
+            HealthAmount.Value = CurrentHealth;
         healthBar.value = CurrentHealth;
 
-        if (CurrentHealth <= 0 && CompareTag("Player")) Destroy(gameObject);
+        if (CurrentHealth <= 0 && CompareTag("Player"))
+        {
+            if(MainManager.players == MainManager.Players.Solo)
+                Destroy(gameObject);
+            else if (IsOwner)
+                NetworkManager.Destroy(gameObject);
+            
+        }
         else if (CurrentHealth <= 0 && CompareTag("Enemy"))
         {
             XPManager.IncreaseXP(10);
@@ -83,6 +100,8 @@ public class Health : MonoBehaviour
     public void GetFullHP()
     {
         CurrentHealth = maxHealth;
+        if (IsOwner)
+            HealthAmount.Value = CurrentHealth;
         healthBar.value = CurrentHealth;
     }
 
@@ -91,6 +110,8 @@ public class Health : MonoBehaviour
         maxHealth = maxHealth + (int)(maxHealth * 0.1f);
         healthBar.maxValue = maxHealth;
         CurrentHealth = maxHealth;
+        if (IsOwner)
+            HealthAmount.Value = CurrentHealth;
         healthBar.value = CurrentHealth;
         Time.timeScale = 1f;
     }

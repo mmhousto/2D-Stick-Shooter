@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SlowMo : MonoBehaviour
+public class SlowMo : NetworkBehaviour
 {
-    public Slider slowMoMeter;
+    private Slider slowMoMeter;
     public float slowMoValue;
     private float maxSlowMo = 1.5f;
     private GetPlayerInput playerInput;
@@ -14,7 +16,9 @@ public class SlowMo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!IsOwner && MainManager.players == MainManager.Players.Coop) return;
         playerInput = GetComponent<GetPlayerInput>();
+        slowMoMeter = GameObject.FindWithTag("SlowMo").GetComponent<Slider>();
         slowMoValue = maxSlowMo;
         slowMoMeter.maxValue = maxSlowMo;
         slowMoMeter.value = slowMoValue;
@@ -22,6 +26,7 @@ public class SlowMo : MonoBehaviour
 
     private void Update()
     {
+        if (!IsOwner && MainManager.players == MainManager.Players.Coop) return;
         if (playerInput != null && playerInput.isAutoMoving && slowMoValue > 0)
         {
             slowMoValue -= Time.deltaTime * 2;

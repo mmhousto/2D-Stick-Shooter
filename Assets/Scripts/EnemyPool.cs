@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class EnemyPool : MonoBehaviour
+public class EnemyPool : NetworkBehaviour
 {
     public static EnemyPool instance;
 
@@ -33,8 +34,18 @@ public class EnemyPool : MonoBehaviour
 
     private EnemyAI CreateObject()
     {
-
-        return Instantiate(enemyPrefab);
+        if (MainManager.players == MainManager.Players.Coop && IsServer)
+        {
+            EnemyAI enemy = Instantiate(enemyPrefab);
+            enemy.GetComponent<NetworkObject>().Spawn(true);
+            return enemy;
+        }
+        else
+        {
+            return Instantiate(enemyPrefab);
+        }
+            
+        
     }
 
     private void OnGet(EnemyAI enemy)

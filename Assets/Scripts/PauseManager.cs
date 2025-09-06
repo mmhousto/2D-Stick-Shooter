@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour
 {
-    public GameObject pauseMenu, resumeButton;
+    private PauseHandler pauseHandler;
     private GetPlayerInput playerInput;
     public static bool isPaused;
 
     // Start is called before the first frame update
     void Start()
     {
+        pauseHandler = GameObject.FindWithTag("PauseHandler").GetComponent<PauseHandler>();
         playerInput = GetComponent<GetPlayerInput>();
         isPaused = false;
+        pauseHandler.resumeButton.GetComponent<Button>().onClick.AddListener(PauseResume);
     }
 
     // Update is called once per frame
@@ -34,13 +36,13 @@ public class PauseManager : MonoBehaviour
         if (isPaused)
         {
             Time.timeScale = 0;
-            pauseMenu.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(resumeButton);
+            pauseHandler.pauseMenu.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(pauseHandler.resumeButton);
         }
         else
         {
             Time.timeScale = 1;
-            pauseMenu.SetActive(false);
+            pauseHandler.pauseMenu.SetActive(false);
         }
     }
 

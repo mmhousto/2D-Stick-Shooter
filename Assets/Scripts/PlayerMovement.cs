@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     public float jumpForce = 10f; // Adjust this value to control the jump force
     public float jumpDuration = 1f; // Adjust this value to control how long the jump lasts
@@ -18,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!IsOwner && MainManager.players == MainManager.Players.Coop) return;
         _playerInput = GetComponent<GetPlayerInput>();
         _rb = GetComponent<Rigidbody2D>();
         initialZPosition = transform.position.z;
@@ -27,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!IsOwner && MainManager.players == MainManager.Players.Coop) return;
         UpdateMovementSpeed();
         Stop();
 
@@ -35,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!IsOwner && MainManager.players == MainManager.Players.Coop) return;
         Move();
     }
 

@@ -2,10 +2,11 @@ using System.Buffers.Text;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class XPManager : MonoBehaviour
+public class XPManager : NetworkBehaviour
 {
     public Slider xpBar;
     public TextMeshProUGUI levelLabel;
@@ -18,6 +19,7 @@ public class XPManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!IsOwner && MainManager.players == MainManager.Players.Coop) return;
         level = 1;
         levelLabel.text = level.ToString();
         xp = 0;
@@ -26,13 +28,41 @@ public class XPManager : MonoBehaviour
         xpBar.minValue = minXP;
         xpBar.maxValue = maxXP;
         xpBar.value = xp;
-        health = GameObject.FindWithTag("Player").GetComponent<Health>();
+        StartCoroutine(GetHealthBar());
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!IsOwner && MainManager.players == MainManager.Players.Coop) return;
         SetLevelAndXP();
+    }
+
+    IEnumerator GetHealthBar()
+    {
+        while(GameObject.FindWithTag("Player") == null)
+        {
+            yield return null;
+        }
+
+        while(health == null)
+        {
+            if(MainManager.players == MainManager.Players.Solo)
+                health = GameObject.FindWithTag("Player").GetComponent<Health>();
+            else
+            {
+                foreach(GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+                {
+                    if(player.GetComponent<NetworkObject>().IsOwner)
+                    {
+                        health = player.GetComponent<Health>();
+                        break;
+                    }
+                }
+            }
+        }
+
+        
     }
 
     private void SetLevelAndXP()
@@ -52,7 +82,8 @@ public class XPManager : MonoBehaviour
         xp += xpToIncrease;
         if (xp > maxXP)
         {
-            health.GetFullHP();
+            if(health != null && health.IsOwner)
+                health.GetFullHP();
             level++;
             UpgradeManager.ShowUpgradeMenu();
             xp = minXP;

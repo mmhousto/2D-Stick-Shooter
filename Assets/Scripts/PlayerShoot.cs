@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerShoot : MonoBehaviour
+public class PlayerShoot : NetworkBehaviour
 {
     private GetPlayerInput _playerInput;
     public GameObject bulletPrefab;
@@ -32,6 +33,9 @@ public class PlayerShoot : MonoBehaviour
     {
         playerSoundEffects = GetComponent<AudioSource>();
         bulletPool = BulletPool.instance;
+
+        if (!IsOwner && MainManager.players == MainManager.Players.Coop) return;
+
         _playerInput = GetComponent<GetPlayerInput>();
         rightWeaponAnim = rightWeapon.GetComponent<Animator>();
         leftWeaponAnim = leftWeapon.GetComponent<Animator>();
@@ -45,7 +49,7 @@ public class PlayerShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(PauseManager.isPaused) return;
+        if (PauseManager.isPaused) return;
         RotateWeapons();
 
         CheckWeaponDirection();
@@ -56,17 +60,19 @@ public class PlayerShoot : MonoBehaviour
 
     void RotateWeapons()
     {
+        if (!IsOwner && MainManager.players == MainManager.Players.Coop) return;
         if (_playerInput.look == Vector2.zero)
             rightFacingDirection.transform.rotation = leftFacingDirection.transform.rotation;
         else
             rightFacingDirection.transform.rotation = Quaternion.Euler(new Vector3(0, 0, GetAngleFromVector(_playerInput.look)));
 
-        if(_playerInput.move != Vector2.zero)
+        if (_playerInput.move != Vector2.zero)
             leftFacingDirection.transform.rotation = Quaternion.Euler(new Vector3(0, 0, GetAngleFromVector(_playerInput.move)));
     }
 
     void CheckWeaponDirection()
     {
+        if (!IsOwner && MainManager.players == MainManager.Players.Coop) return;
         if (leftFacingDirection.transform.localRotation.z >= .75f && leftWeapon.flipY == false)
         {
             leftWeapon.flipY = true;
@@ -78,7 +84,7 @@ public class PlayerShoot : MonoBehaviour
             bulletLeftSpawn.transform.localPosition = posSpawnLocation;
         }
 
-        if(rightFacingDirection.transform.localRotation.z >= .75 && rightWeapon.flipY == false)
+        if (rightFacingDirection.transform.localRotation.z >= .75 && rightWeapon.flipY == false)
         {
             rightWeapon.flipY = true;
             bulletRightSpawn.transform.localPosition = negSpawnLocation;
@@ -92,17 +98,24 @@ public class PlayerShoot : MonoBehaviour
 
     void CheckIfLeftFiring()
     {
-        if(leftTime <= 0)
+        if (leftTime <= 0)
         {
             leftTime = 0;
             canLeftFire = true;
-        }else
+        } else
         {
             leftTime -= Time.deltaTime;
             canLeftFire = false;
         }
 
-        if (_playerInput.isLeftFiring == true && canLeftFire == true)
+        if (IsOwner && _playerInput.isLeftFiring == true && canLeftFire == true)
+        {
+            leftWeaponAnim.SetTrigger("Fire");
+            Invoke(nameof(FireLeftProjectileRpc), 0.1f);
+            canLeftFire = false;
+            leftTime = fireTime;
+        }
+        else if (MainManager.players == MainManager.Players.Solo && _playerInput.isLeftFiring == true && canLeftFire == true)
         {
             leftWeaponAnim.SetTrigger("Fire");
             Invoke(nameof(FireLeftProjectile), 0.1f);
@@ -124,7 +137,14 @@ public class PlayerShoot : MonoBehaviour
             canFire = false;
         }
 
-        if (_playerInput.isFiring == true && canFire == true)
+        if (IsOwner && _playerInput.isFiring == true && canFire == true)
+        {
+            rightWeaponAnim.SetTrigger("Fire");
+            Invoke(nameof(FireProjectileRpc), 0.1f);
+            canFire = false;
+            rightTime = fireTime;
+        }
+        else if (MainManager.players == MainManager.Players.Solo && _playerInput.isFiring == true && canFire == true)
         {
             rightWeaponAnim.SetTrigger("Fire");
             Invoke(nameof(FireProjectile), 0.1f);
@@ -146,6 +166,34 @@ public class PlayerShoot : MonoBehaviour
     void FireLeftProjectile()
     {
         playerSoundEffects.Play();
+        var clone = bulletPool.bulletPool.Get();
+        clone.transform.position = bulletLeftSpawn.transform.position;
+        clone.transform.rotation = bulletLeftSpawn.transform.rotation;
+        //GameObject clone = Instantiate(bulletPrefab, bulletLeftSpawn.transform.position, leftFacingDirection.transform.rotation);
+        clone.GetComponent<Rigidbody2D>().AddForce(clone.transform.right * shotStrength, ForceMode2D.Impulse);
+    }
+
+    [Rpc(SendTo.Everyone)]
+    void FireProjectileRpc()
+    {
+        playerSoundEffects = GetComponent<AudioSource>();
+        if(playerSoundEffects != null)
+            playerSoundEffects.Play();
+
+        var clone = bulletPool.bulletPool.Get();
+        clone.transform.position = bulletRightSpawn.transform.position;
+        clone.transform.rotation = bulletRightSpawn.transform.rotation;
+        //GameObject clone = Instantiate(bulletPrefab, bulletRightSpawn.transform.position, rightFacingDirection.transform.rotation);
+        clone.GetComponent<Rigidbody2D>().AddForce(clone.transform.right * shotStrength, ForceMode2D.Impulse);
+    }
+
+    [Rpc(SendTo.Everyone)]
+    void FireLeftProjectileRpc()
+    {
+        playerSoundEffects = GetComponent<AudioSource>();
+        if (playerSoundEffects != null) 
+            playerSoundEffects.Play();
+
         var clone = bulletPool.bulletPool.Get();
         clone.transform.position = bulletLeftSpawn.transform.position;
         clone.transform.rotation = bulletLeftSpawn.transform.rotation;
