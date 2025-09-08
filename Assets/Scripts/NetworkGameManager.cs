@@ -18,7 +18,10 @@ public class NetworkGameManager : NetworkBehaviour
         }
         else
         {
-            Instantiate(playerPrefab, spawnPoints[0].position, Quaternion.identity);
+            GameObject player = Instantiate(playerPrefab, spawnPoints[0].position, Quaternion.identity);
+            enemySpawnPoints[1].SetParent(player.transform);
+            enemySpawnPoints[1].localPosition = Vector3.zero;
+            enemySpawnPoints[1].gameObject.SetActive(true);
         }
     }
 
