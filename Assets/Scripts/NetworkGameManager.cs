@@ -1,50 +1,73 @@
-using Cinemachine;
+using System.Collections.Generic;
 using Unity.Netcode;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class NetworkGameManager : NetworkBehaviour
 {
-    private NetworkObject[] playerObjects;
+    private List<NetworkObject> playerObjects = new List<NetworkObject>();
     public GameObject playerPrefab;
     public Transform[] spawnPoints;
     public Transform[] enemySpawnPoints;
+    private bool spawnedPlayer;
+    private int spawnedPlayerCount = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (IsOwner && MainManager.players == MainManager.Players.Coop)
+
+
+        if (MainManager.players == MainManager.Players.Coop)
         {
-            SpawnPlayersRpc();
+            //SpawnPlayerRpc();
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
+            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnectCallback;
+            SpawnPlayerRpc();
         }
-        else
+        else if (MainManager.players == MainManager.Players.Solo && MainManager.mode == MainManager.Mode.Endless)
         {
             GameObject player = Instantiate(playerPrefab, spawnPoints[0].position, Quaternion.identity);
-            enemySpawnPoints[1].SetParent(player.transform);
-            enemySpawnPoints[1].localPosition = Vector3.zero;
-            enemySpawnPoints[1].gameObject.SetActive(true);
+            enemySpawnPoints[0].SetParent(player.transform);
+            enemySpawnPoints[0].localPosition = Vector3.zero;
+            enemySpawnPoints[0].gameObject.SetActive(true);
         }
     }
 
-    [Rpc(SendTo.Server)]
-    public void SpawnPlayersRpc()
+    private void OnClientConnectedCallback(ulong clientId)
     {
-        int i = 0;
-        playerObjects = new NetworkObject[NetworkManager.Singleton.ConnectedClients.Count];
-        foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
+        Debug.Log("Client Connected");
+        if (clientId == NetworkManager.Singleton.LocalClientId && spawnedPlayer == false && IsClient)
         {
-            GameObject player = NetworkManager.Instantiate(playerPrefab, spawnPoints[i].position, Quaternion.identity);
-            playerObjects[i] = player.GetComponent<NetworkObject>();
-            playerObjects[i].SpawnAsPlayerObject(client.ClientId, true);
-
-            if(MainManager.mode == MainManager.Mode.Endless)
-            {
-                enemySpawnPoints[i].SetParent(player.transform);
-                enemySpawnPoints[i].localPosition = Vector3.zero;
-                enemySpawnPoints[i].gameObject.SetActive(true);
-            }
-
-            i++;
+            spawnedPlayer = true;
+            SpawnPlayerRpc();
         }
+
+    }
+
+    private void OnClientDisconnectCallback(ulong clientId)
+    {
+
+        if (clientId == NetworkManager.Singleton.LocalClientId)//OnClientConnectionNotification?.Invoke(clientId, ConnectionStatus.Disconnected);
+            spawnedPlayer = false;
+    }
+
+    [Rpc(SendTo.Server)]
+    public void SpawnPlayerRpc()
+    {
+        //playerObjects = new NetworkObject[NetworkManager.Singleton.ConnectedClients.Count];
+        GameObject player = Instantiate(playerPrefab, spawnPoints[spawnedPlayerCount].position, Quaternion.identity);
+        playerObjects.Add(player.GetComponent<NetworkObject>());
+        playerObjects[spawnedPlayerCount].SpawnAsPlayerObject(playerObjects[spawnedPlayerCount].OwnerClientId, true);
+
+        if (MainManager.mode == MainManager.Mode.Endless)
+        {
+            enemySpawnPoints[spawnedPlayerCount].SetParent(player.transform);
+            enemySpawnPoints[spawnedPlayerCount].localPosition = Vector3.zero;
+            enemySpawnPoints[spawnedPlayerCount].gameObject.SetActive(true);
+        }
+
+        spawnedPlayerCount++;
+
     }
 
     // Update is called once per frame
